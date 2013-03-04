@@ -109,3 +109,6 @@ default['nagios']['server']['ignored_service_hostgroups'] = []
 # (i.e. bond.2001 for ipaddress_bond.2001)  Requires Ohai network_addr plugin
 # https://gist.github.com/jtimberman/1040543 or will fall back to node["ipaddress"].
 default['nagios']['server']['monitored_client_interface'] = nil
+
+default['nagios']['server']['host_notes'] = nil
+default['nagios']['server']['host_notes_url'] = nil
