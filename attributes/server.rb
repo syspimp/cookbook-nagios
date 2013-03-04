@@ -112,3 +112,5 @@ default['nagios']['server']['monitored_client_interface'] = nil
 
 default['nagios']['server']['host_notes'] = nil
 default['nagios']['server']['host_notes_url'] = nil
+
+default['nagios']['server']['normalize_hostname'] = false

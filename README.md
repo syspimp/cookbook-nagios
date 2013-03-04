@@ -128,6 +128,8 @@ The following attributes are used for the Nagios server
 * `node['nagios']['server']['ignored_service_hostgroups']` - Do not monitor services in these hostgroups.
 * `node['nagios']['server']['host_notes']` - If set, adds a notes entry to hosts.cfg for all hosts.
 * `node['nagios']['server']['host_notes_url']` - If set, adds a notes_url entry to hosts.cfg for all hosts.
+* `node['nagios']['server']['normalize_hostname']` - If set to true, normalize all hostnames in hosts.cfg to lowercase.  Defaults to false.
+
 
 Recipes
 =======
