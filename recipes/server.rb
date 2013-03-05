@@ -120,7 +120,11 @@ service_hosts= Hash.new
 search(:role, "*:*") do |r|
   hostgroups << r.name
   nodes.select {|n| n['roles'].include?(r.name) }.each do |n|
-    service_hosts[r.name] = n[node['nagios']['host_name_attribute']]
+    if n[node['nagios']['host_name_attribute']]
+      service_hosts[r.name] = n[node['nagios']['host_name_attribute']]
+    else
+      service_hosts[r.name] = n['hostname']
+    end
   end
 end
 
@@ -129,7 +133,11 @@ if node['nagios']['multi_environment_monitoring']
   search(:environment, "*:*") do |e|
     hostgroups << e.name
     nodes.select {|n| n.chef_environment == e.name }.each do |n|
-      service_hosts[e.name] = n[node['nagios']['host_name_attribute']]
+      if n[node['nagios']['host_name_attribute']]
+        service_hosts[e.name] = n[node['nagios']['host_name_attribute']]
+      else
+        service_hosts[e.name] = n['hostname']
+      end
     end
   end
 end
@@ -253,8 +261,7 @@ end
 nagios_conf "services" do
   variables(:service_hosts => service_hosts,
             :services => services,
-            :hostgroups => hostgroups,
-            :ignored_hostgroups => nagios_ignored_hostgroups)
+            :hostgroups => hostgroups)
 end
 
 nagios_conf "servicegroups" do

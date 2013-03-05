@@ -103,8 +103,6 @@ default['nagios']['server']['nginx_dispatch'] = :cgi
 default['nagios']['server']['stop_apache'] = false
 default['nagios']['server']['redirect_root'] = false
 
-default['nagios']['server']['ignored_service_hostgroups'] = []
-
 # If set allows specifying an interface name to use for client monitoring
 # (i.e. bond.2001 for ipaddress_bond.2001)  Requires Ohai network_addr plugin
 # https://gist.github.com/jtimberman/1040543 or will fall back to node["ipaddress"].
