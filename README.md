@@ -200,7 +200,7 @@ Installs the Nagios server from source. Default for Red Hat / Fedora based syste
 pagerduty
 ---------
 
-Installs and configures pagerduty plugin for nagios.  You need to set a `node['nagios']['pagerduty_key']` attribute on your server for this to work.  This can be set through environments so that you can use different API keys for servers in production vs staging for instance.
+Installs pagerduty plugin for nagios.  For configuration see Pager Duty under Data Bags.
 
 This recipe was written based on the [Nagios Integration Guide](http://www.pagerduty.com/docs/guides/nagios-integration-guide) from PagerDuty which explains how to get an API key for your nagios server.
 
@@ -396,6 +396,21 @@ Once you've defined an event handler you will need to add the event handler to a
       "event_handler": "restart_chef-client"
 	}
 
+Pager Duty
+----------
+
+You can define pagerduty contacts and keys by creating nagios\_pagerduty data bags that contain the contact and
+the relevant key. Setting admin\_contactgroup to "true" will add this pagerduty contact to the admin contact group
+created by this cookbook.
+
+       {
+         "id": "pagerduty_critical",
+         "admin_contactgroup": "true",
+         "key": "a33e5ef0ac96772fbd771ddcccd3ccd0"
+       }
+
+Defining any pagerduty contact data bags will automatically install and configure the pagerduty plugin.
+You can then add these contacts to any contactgroups you create.
 
 Monitoring Role
 ===============

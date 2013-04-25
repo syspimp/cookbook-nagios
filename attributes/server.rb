@@ -22,8 +22,6 @@
 # limitations under the License.
 #
 
-default['nagios']['pagerduty_key'] = ''
-
 case node['platform_family']
 when 'debian'
   default['nagios']['server']['install_method'] = 'package'
