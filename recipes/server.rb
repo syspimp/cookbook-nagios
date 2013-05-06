@@ -158,6 +158,7 @@ unmanaged_hosts = nagios_bags.get('nagios_unmanagedhosts')
 serviceescalations = nagios_bags.get('nagios_serviceescalations')
 contacts = nagios_bags.get('nagios_contacts')
 contactgroups = nagios_bags.get('nagios_contactgroups')
+pagerduty_contacts = nagios_bags.get('nagios_pagerduty')
 
 # Add unmanaged host hostgroups to the hostgroups array if they don't already exist
 unmanaged_hosts.each do |host|
@@ -192,6 +193,10 @@ end
 members = Array.new
 sysadmins.each do |s|
   members << s['id']
+end
+
+pagerduty_contacts.each do |p|
+  p['admin_contactgroup'] && (members << (p['id'] || p['contact']))
 end
 
 public_domain = node['public_domain'] || node['domain']
@@ -287,6 +292,15 @@ nagios_conf "hosts" do
   variables(:nodes => nodes,
             :unmanaged_hosts => unmanaged_hosts,
             :hostgroups => hostgroups)
+end
+
+# Pagerduty
+if not pagerduty_contacts.empty?
+  include_recipe 'nagios::pagerduty'
+
+  nagios_conf "pagerduty" do
+    variables(:contacts => pagerduty_contacts)
+  end
 end
 
 service "nagios" do
