@@ -500,6 +500,12 @@ Add override_attributes to your `monitoring` role:
 
     % knife role from file monitoring.rb
 
+Testing
+=======
+
+    $ bundle install
+    $ bundle exec berks install
+    $ bundle exec strainer test
 
 License and Author
 ==================
