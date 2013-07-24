@@ -52,7 +52,7 @@ define host {
 define host {
   use server
   address <%= n['address'] %>
-  host_name <%= n['fqdn'] %>
+  host_name <%= n['id'] %>
   hostgroups <%= n['hostgroups'].join(",") %>
   notifications_enabled <%= n['notifications'] %>
 }
