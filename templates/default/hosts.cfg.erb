@@ -80,7 +80,11 @@ define host {
 define host {
   use server
   address <%= n['address'] %>
+  <% if n['fqdn'] -%>
   host_name <%= node['nagios']['server']['normalize_hostname'] ? n['fqdn'].downcase : n['fqdn'] %>
+  <% else -%>
+  host_name <%= node['nagios']['server']['normalize_hostname'] ? n['id'].downcase : n['id'] %>
+  <% end -%>
   hostgroups all,<%= n['hostgroups'].join(",") %>
   notifications_enabled <%= n['notifications'] %>
   <% if node['nagios']['server']['host_notes'] %>

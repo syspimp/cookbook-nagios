@@ -37,13 +37,6 @@ else
     mon_host << (node['nagios']['server']['monitored_client_interface'] ? n['network']["ipaddress_#{node['nagios']['server']['monitored_client_interface']}"] : n['ipaddress'])
   end
 end
-# on the first run, search isn't available, so if you're the nagios server, go
-# ahead and put your own IP address in the NRPE config (unless it's already there).
-if node.run_list.roles.include?(node['nagios']['server_role'])
-  unless mon_host.include?(node['ipaddress']) || (node['nagios']['server']['monitored_client_interface'] && mon_host.include?(node['nagios']['server']['monitored_client_interface']))
-    mon_host << (node['nagios']['server']['monitored_client_interface'] ? node['network']["ipaddress_#{node['nagios']['server']['monitored_client_interface']}"] : node['ipaddress'])
-  end
-end
 
 mon_host.concat node['nagios']['allowed_hosts'] if node['nagios']['allowed_hosts']
 

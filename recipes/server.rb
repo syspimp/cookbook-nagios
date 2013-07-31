@@ -294,6 +294,24 @@ nagios_conf "hosts" do
             :hostgroups => hostgroups)
 end
 
+primary_ip = String.new
+
+if Chef::Config[:solo]
+  Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
+else
+  search(:node, "roles:#{node[:nagios][:server_role]} AND chef_environment:#{node.chef_environment}") do |s|
+    primary_ip = s['network']["ipaddress_#{node['nagios']['server']['monitored_client_interface']}"]
+  end
+end
+
+template ::File.join(node['nagios']['conf_dir'],"resource.cfg") do
+  source "resource.cfg.erb"
+  owner "root"
+  group "nagios"
+  mode 00640
+  variables(:primary_ip => primary_ip)
+end
+
 # Pagerduty
 if not pagerduty_contacts.empty?
   include_recipe 'nagios::pagerduty'

@@ -24,6 +24,9 @@ default['nagios']['multi_environment_monitoring'] = false
 default['nagios']['user']  = 'nagios'
 default['nagios']['group'] = 'nagios'
 
+default['nagios']['server_role'] = 'monitoring'
+default['nagios']['server_standby_role'] = 'monitoring-standby'
+
 case node['platform_family']
 when 'debian'
 default['nagios']['plugin_dir']     = '/usr/lib/nagios/plugins'
