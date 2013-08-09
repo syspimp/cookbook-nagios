@@ -4,12 +4,12 @@
 
 define command {
        command_name     notify-service-by-pagerduty
-       command_line     <%= ::File.join(node['nagios']['plugin_dir'], "pagerduty_nagios.pl") %> enqueue -f pd_nagios_object=service
+       command_line     eval $USER2$ || <%= ::File.join(node['nagios']['plugin_dir'], "pagerduty_nagios.pl") %> enqueue -f pd_nagios_object=service
 }
 
 define command {
        command_name     notify-host-by-pagerduty
-       command_line     <%= ::File.join(node['nagios']['plugin_dir'], "pagerduty_nagios.pl") %> enqueue -f pd_nagios_object=host
+       command_line     eval $USER2$ || <%= ::File.join(node['nagios']['plugin_dir'], "pagerduty_nagios.pl") %> enqueue -f pd_nagios_object=host
 }
 
 <% @contacts.each do |contact| -%>
