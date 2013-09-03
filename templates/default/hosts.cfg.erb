@@ -47,8 +47,11 @@ define host {
     ip = n['ipaddress']
   end %>
   address <%= ip %>
-  <% if n[node['nagios']['host_name_attribute']] %>
+  <% # arista devices don't have fqdn hostname, the node name is the fqdn
+  if n[node['nagios']['host_name_attribute']] && !n['roles'].include?('arista-switch') %>
   host_name <%= node['nagios']['server']['normalize_hostname'] ? n[node['nagios']['host_name_attribute']].downcase : n[node['nagios']['host_name_attribute']] %>
+  <% elsif n['roles'].include?('arista-switch') %>
+  host_name <%= node['nagios']['server']['normalize_hostname'] ? n['chef_client']['config']['node_name'].downcase : n['chef_client']['config']['node_name'] %>
   <% else %>
   host_name <%= node['nagios']['server']['normalize_hostname'] ? n['hostname'].downcase : n['hostname'] %>
   <% end %>
